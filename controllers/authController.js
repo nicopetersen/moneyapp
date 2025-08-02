@@ -62,9 +62,14 @@ const login = async (req, res) => {
         email: user.email,
       },
     });
+    console.log('✅ Login exitoso para:', user.email);
+    console.log('📥 Login recibido:', req.body);
   } catch (error) {
     res.status(500).json({ message: 'Error al iniciar sesión' });
   }
 };
+
+
+  
 
 module.exports = { register, login };

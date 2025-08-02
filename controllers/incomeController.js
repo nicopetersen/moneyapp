@@ -25,6 +25,7 @@ const createIncome = async (req, res) => {
 const getIncomes = async (req, res) => {
     try {
         const incomes = await Income.find({ user: req.user.id }).sort({ date: -1 });
+        console.log('🔐 Usuario:', req.user, '| Datos recibidos:', req.body);
         res.json(incomes);
     } catch (error) {
         res.status(500).json({ message: 'Error al obtener ingresos' });
