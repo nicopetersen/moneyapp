@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const connectDB = require('./config/db');
+const incomeRoutes = require('./routes/incomeRoutes');
 
 dotenv.config();
 
@@ -25,6 +26,8 @@ connectDB()
     // Importar rutas
     const authRoutes = require('./routes/authRoutes');
     app.use('/api/auth', authRoutes);
+    app.use('/api/income', incomeRoutes);
+
 
     // Ruta pública de prueba
     app.get('/', (req, res) => {

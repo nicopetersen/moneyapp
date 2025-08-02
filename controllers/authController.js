@@ -31,7 +31,12 @@ const register = async (req, res) => {
       },
     });
   } catch (error) {
-    res.status(500).json({ message: 'Error al registrar usuario' });
+    console.log('Error en registro:', error);
+    res.status(500).json({ message: 'Error al registrar usuario', user: {
+        id: newUser._id,
+        name: newUser.name,
+        email: newUser.email,
+      } });
   }
 };
 
@@ -44,9 +49,11 @@ const login = async (req, res) => {
 
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) return res.status(400).json({ message: 'Credenciales inválidas' });
-
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '7d' });
-
+    const token = jwt.sign(
+      { id: user._id }, // ✅ debe incluir el ID
+      process.env.JWT_SECRET,
+      { expiresIn: '7d' }
+    );
     res.json({
       token,
       user: {
